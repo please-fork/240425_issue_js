@@ -39,9 +39,29 @@ function getKSTTime(format) {
   return (new Date()).toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
 }
 
+function dataFrameToMarkdown(df) {
+  const columns = df.columns;
+  const data = df.values;
+
+  // 열 이름 생성
+  const header = `| ${columns.join(' | ')} |`;
+
+  // 구분자 생성
+  const separator = `|${columns.map(() => '---').join('|')}|`;
+
+  // 데이터 행 생성
+  const rows = data.map(row => `| ${row.join(' | ')} |`);
+
+  // 마크다운 테이블 생성
+  const markdownTable = [header, separator, ...rows].join('\n');
+
+  return markdownTable;
+}
+
 (async function main() {
   const df = await getTable();
   const title = `환율 모니터링 (${getKSTTime()})`;
-  const body = df.toString();
+  const body = dataFrameToMarkdown(df);
+  // console.log(body);
   await sendIssue(title, body);
 })();
