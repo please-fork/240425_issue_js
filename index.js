@@ -18,7 +18,9 @@ async function getData() {
 async function getTable() {
   const dataFrames = await getData();
   let df = dfd.concat({ dfList: dataFrames, axis: 0 });
-  df['currency'] = df['code'].map(value => value.replace('FRX.KRW', ''));
+  df.addColumn({ column: 'currency',
+    value: df.get('code').values.map(
+      value => value.replace('FRX.KRW', '')) });
   df = df.loc({ columns: ['currency', 'basePrice', 'currencyUnit', 'date', 'time'] });
   return df;
 }
