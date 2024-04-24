@@ -1,0 +1,18 @@
+name: daily-monitoring
+on:
+    schedule:
+        - cron: '0 * * * *'
+    workflow_dispatch:
+jobs:
+    monitoring_by_schedule:
+        runs-on: ubuntu-latest
+        permissions:
+          issues: write
+        steps:
+            - uses: actions/checkout@v4
+            - name: Use Node.js
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20.x'
+            - run: npm i
+            - run: node index.js
