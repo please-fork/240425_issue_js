@@ -8,13 +8,22 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
           issues: write
-        env:
-          currency: ${{ vars.currency }}
         steps:
-            - uses: actions/checkout@v4
-            - name: Use Node.js
+            - name: 저장소 체크아웃
+              uses: actions/checkout@v4
+
+            - name: 노드 셋업
               uses: actions/setup-node@v4
               with:
                 node-version: '20.x'
-            - run: npm i
-            - run: node index.js
+
+            - name: 의존성 설치
+              run: npm i
+
+            - name: 모니터링 실행
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_OWNER: ${{ github.repository_owner }}
+                  GH_REPO: ${{ github.event.repository.name }}
+              run: node index.js
+            
