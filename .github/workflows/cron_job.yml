@@ -22,6 +22,7 @@ jobs:
 
             - name: 모니터링 실행
               env:
+                  currency: ${{ vars.currency }}
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   GH_OWNER: ${{ github.repository_owner }}
                   GH_REPO: ${{ github.event.repository.name }}
