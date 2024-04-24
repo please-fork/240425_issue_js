@@ -8,6 +8,8 @@ jobs:
         runs-on: ubuntu-latest
         permissions:
           issues: write
+        env:
+          currency: ${{ vars.currency }}
         steps:
             - uses: actions/checkout@v4
             - name: Use Node.js
